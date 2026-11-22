@@ -1,0 +1,6 @@
+config/alter-white.json
+results/*
+!results/.gitkeep
+__pycache__/
+*.pyc
+.DS_Store
