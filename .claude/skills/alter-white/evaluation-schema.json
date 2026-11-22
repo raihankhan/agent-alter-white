@@ -171,7 +171,8 @@
       "required": [
         "execution_status",
         "limitations",
-        "project_proposal_status"
+        "project_proposal_status",
+        "proposal_source"
       ],
       "properties": {
         "execution_status": {
@@ -189,6 +190,13 @@
             "missing",
             "unreadable"
           ]
+        },
+        "proposal_source": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Repository-relative name of the proposal file that was read, e.g. project.pdf or project.docx. Null when no proposal file was found."
         }
       }
     },

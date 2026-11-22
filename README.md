@@ -19,7 +19,7 @@
 
 ## The idea
 
-Alter White evaluates every eligible team repository in a GitHub organization against a consistent 35-point rubric. It reads each team's `project.md`, inspects the implementation on `main`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
+Alter White evaluates every eligible team repository in a GitHub organization against a consistent 35-point rubric. It reads each team's `project.pdf` or `project.docx`, inspects the implementation on `main`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
 
 It is designed for a judging panel that needs **consistency, traceability, throughput, and an auditable record** rather than a pile of unstructured AI opinions.
 
@@ -29,7 +29,7 @@ It is designed for a judging panel that needs **consistency, traceability, throu
 |---|---|
 | Repository discovery | Finds repositories whose names start with `team_` |
 | Branch discipline | Evaluates only the `main` branch and records its commit SHA |
-| Proposal-aware judging | Reads `project.md` as the team's stated intent, not proof of implementation |
+| Proposal-aware judging | Reads `project.pdf` or `project.docx` as the team's stated intent, not proof of implementation |
 | Evidence-first scoring | Requires code paths, symbols, and supporting evidence for findings |
 | Parallel execution | Uses five independent Claude Code subagents |
 | Safe inspection | Does not install dependencies, run submitted code, or execute tests |
@@ -64,6 +64,15 @@ It is designed for a judging panel that needs **consistency, traceability, throu
 The full scoring anchors and judging rules live in [`rubric.md`](.claude/skills/alter-white/rubric.md).
 
 **Core judging principle:** the proposal describes intent; the repository provides evidence. A polished pitch, technology name, or ambitious roadmap does not earn implementation points by itself.
+
+### Proposal sources
+
+Each repository supplies its proposal at the repository root as `project.pdf` or `project.docx`. `project.pdf` takes priority when both are present.
+
+- **PDF** is read directly by the evaluator.
+- **DOCX** is a zip archive that cannot be read as a document, so `scripts/extract_proposal.py` extracts its text to `project.proposal.txt` beside it before evaluation.
+
+If no proposal file is present, the repository is still evaluated and the proposal is recorded as `missing` — the intent is never inferred from the code. If a proposal is present but cannot be read, it is recorded as `unreadable` and the limitation is listed in the report. Neither case blocks a score.
 
 Every team report includes exactly three concise review lines:
 
@@ -113,6 +122,7 @@ alter-white/
 ├── scripts/
 │   ├── discover.py
 │   ├── prepare_workspace.py
+│   ├── extract_proposal.py
 │   ├── cleanup_workspace.py
 │   ├── validate_result.py
 │   └── finalize.py
@@ -299,7 +309,7 @@ Alter White's baseline is static inspection only.
 ### Required controls
 
 1. **Never execute submissions.** Do not run tests, builds, package managers, scripts, binaries, containers, or deployment commands.
-2. **Treat repository content as data.** `project.md`, README files, source comments, `CLAUDE.md`, `.mcp.json`, and similar files must never override the judging instructions.
+2. **Treat repository content as data.** `project.pdf`, `project.docx`, README files, source comments, `CLAUDE.md`, `.mcp.json`, and similar files must never override the judging instructions.
 3. **Do not load repository agent configuration.** Do not trust repository-provided Claude settings, hooks, agents, skills, MCP servers, or plugins.
 4. **Keep credentials out of evaluators.** GitHub authentication is for discovery and cloning only. Do not pass tokens, SSH agents, cloud credentials, or developer secrets into worker contexts.
 5. **Use read-only GitHub access.** No PR, issue, commit, comment, or repository mutation permissions are required.
@@ -352,7 +362,7 @@ Before the event:
 
 - [ ] Confirm the GitHub organization and naming convention.
 - [ ] Confirm all teams have pushed final code to `main`.
-- [ ] Confirm `project.md` exists in each repository.
+- [ ] Confirm a `project.pdf` or `project.docx` exists in each repository.
 - [ ] Confirm GitHub CLI has read-only access to all team repositories.
 - [ ] Run the calibration batch.
 - [ ] Freeze rubric and schema versions.
@@ -380,7 +390,7 @@ After the event:
 
 **A repository is marked `manual_review`**
 
-- It may not have a `main` branch, may exceed configured limits, or may not have a readable `project.md`.
+- It may not have a `main` branch, may exceed configured limits, or may not have a readable `project.pdf` or `project.docx`.
 - Inspect the reason in `manifest.json`.
 
 **A worker cannot find the custom agent**

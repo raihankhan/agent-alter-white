@@ -54,7 +54,7 @@
 
 - **Mode:** Static source inspection only
 - **Runtime execution:** Not performed
-- **Proposal (`project.md`):** {{verification.project_proposal_status}}
+- **Proposal:** {{verification.project_proposal_status}}{{#if verification.proposal_source}} (`{{verification.proposal_source}}`){{/if}}
 
 ### Limitations
 

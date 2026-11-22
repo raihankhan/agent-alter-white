@@ -47,6 +47,9 @@ def main():
             "disk_usage_kb": int(r.get("diskUsage") or 0),
             "branch": cfg["branch"],
             "commit_sha": None,
+            "proposal_source": None,
+            "proposal_readable_path": None,
+            "proposal_error": None,
             "eligible": False,
             "status": "excluded",
             "reason": None
