@@ -86,7 +86,7 @@ def main():
             result = json.loads(result_file.read_text())
             tech, ai = result["scores"]["technical_total"], result["scores"]["ai_total"]
             report = f"[Review](teams/{repo['name']}.md)"
-            lines.append(f"| {rank} | `{repo['name']}` | {tech}/20 | {ai}/15 | **{score}/35** | {confidence} | {repo['status']} | {report} |")
+            lines.append(f"| {rank} | `{repo['name']}` | {tech}/25 | {ai}/25 | **{score}/50** | {confidence} | {repo['status']} | {report} |")
         else:
             reason = (repo.get("reason") or repo["status"]).replace("|", "/")
             lines.append(f"| — | `{repo['name']}` | — | — | — | — | {repo['status']} ({reason}) | — |")

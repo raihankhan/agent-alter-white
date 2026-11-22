@@ -1,7 +1,7 @@
 # Alter White judging rubric
 
-**Rubric version:** 1.0.0  
-**Maximum score:** 35 points  
+**Rubric version:** 1.1.0  
+**Maximum score:** 50 points  
 **Evaluation mode:** Static repository inspection; no submitted code is executed.
 
 ## Judging philosophy
@@ -19,25 +19,25 @@
 
 ---
 
-## 1. Technical Implementation — 20 points
+## 1. Technical Implementation — 25 points
 
 | Dimension | Max | What to assess |
 |---|---:|---|
-| Functional completeness | 5 | Are the core proposal workflows implemented? Are important paths connected rather than represented by placeholders? |
-| Architecture and design | 4 | Are responsibilities, modules, interfaces, and data flows coherent? Is the design appropriate to the problem? |
-| Code quality | 4 | Is the code understandable, maintainable, consistent, and appropriately structured? |
-| Reliability and security | 4 | Are errors, validation, secrets, authorization, input handling, and failure cases addressed in the code? |
-| Integration and execution evidence | 3 | Are UI/API/data/model/provider/infrastructure integrations connected in source? Is there credible evidence of a runnable project setup? |
+| Functional completeness | 6 | Are the core proposal workflows implemented? Are important paths connected rather than represented by placeholders? |
+| Architecture and design | 5 | Are responsibilities, modules, interfaces, and data flows coherent? Is the design appropriate to the problem? |
+| Code quality | 5 | Is the code understandable, maintainable, consistent, and appropriately structured? |
+| Reliability and security | 5 | Are errors, validation, secrets, authorization, input handling, and failure cases addressed in the code? |
+| Integration and execution evidence | 4 | Are UI/API/data/model/provider/infrastructure integrations connected in source? Is there credible evidence of a runnable project setup? |
 
 ### Technical score anchors
 
 | Score | Anchor |
 |---:|---|
-| 0–4 | Mostly scaffolding, placeholders, or a very incomplete implementation; core workflow is absent. |
-| 5–9 | Basic implementation exists, but important workflows are incomplete, disconnected, or fragile. |
-| 10–14 | Main functionality appears implemented from source; architecture is reasonable, with notable weaknesses. |
-| 15–17 | Strong, coherent implementation; good architecture and maintainability; important failure cases are considered. |
-| 18–20 | Exceptional completeness and engineering quality, with convincing evidence of robust, integrated implementation. |
+| 0–5 | Mostly scaffolding, placeholders, or a very incomplete implementation; core workflow is absent. |
+| 6–11 | Basic implementation exists, but important workflows are incomplete, disconnected, or fragile. |
+| 12–17 | Main functionality appears implemented from source; architecture is reasonable, with notable weaknesses. |
+| 18–21 | Strong, coherent implementation; good architecture and maintainability; important failure cases are considered. |
+| 22–25 | Exceptional completeness and engineering quality, with convincing evidence of robust, integrated implementation. |
 
 ### Technical scoring notes
 
@@ -48,25 +48,25 @@
 
 ---
 
-## 2. AI Integration & Intelligence — 15 points
+## 2. AI Integration & Intelligence — 25 points
 
 | Dimension | Max | What to assess |
 |---|---:|---|
-| AI centrality and relevance | 4 | Is AI essential or materially useful to the proposed product, rather than decorative? |
-| Intelligence and AI architecture | 4 | Is there meaningful reasoning, orchestration, tool use, planning, structured generation, or stateful workflow design? |
-| Context and data grounding | 3 | Does the AI receive relevant user/application/domain context? Is retrieval or grounding appropriate and traceable where needed? |
-| Evaluation and guardrails | 2 | Are outputs validated? Are safety, permissions, uncertainty, evaluation, or human review addressed where appropriate? |
-| Resilience and adaptability | 2 | Are failures, provider errors, retries, fallbacks, context limits, or changing inputs handled thoughtfully? |
+| AI centrality and relevance | 5 | Is AI essential or materially useful to the proposed product, rather than decorative? |
+| Intelligence and AI architecture | 6 | Is there meaningful reasoning, orchestration, tool use, planning, structured generation, or stateful workflow design? |
+| Context and data grounding | 5 | Does the AI receive relevant user/application/domain context? Is retrieval or grounding appropriate and traceable where needed? |
+| Evaluation and guardrails | 4 | Are outputs validated? Are safety, permissions, uncertainty, evaluation, or human review addressed where appropriate? |
+| Resilience and adaptability | 5 | Are failures, provider errors, retries, fallbacks, context limits, or changing inputs handled thoughtfully? |
 
 ### AI score anchors
 
 | Score | Anchor |
 |---:|---|
-| 0–3 | AI is absent, superficial, hardcoded, or unrelated to the core value. |
-| 4–7 | Basic model/API integration exists, but intelligence, grounding, or workflow depth is limited. |
-| 8–11 | Meaningful AI integration with useful context and intelligent workflows; some design gaps remain. |
-| 12–13 | Strong AI architecture, grounding, orchestration, validation, and thoughtful failure handling. |
-| 14–15 | Exceptional, demonstrable intelligence with robust grounding, evaluation, safety, and resilience. |
+| 0–4 | AI is absent, superficial, hardcoded, or unrelated to the core value. |
+| 5–10 | Basic model/API integration exists, but intelligence, grounding, or workflow depth is limited. |
+| 11–16 | Meaningful AI integration with useful context and intelligent workflows; some design gaps remain. |
+| 17–21 | Strong AI architecture, grounding, orchestration, validation, and thoughtful failure handling. |
+| 22–25 | Exceptional, demonstrable intelligence with robust grounding, evaluation, safety, and resilience. |
 
 ### AI scoring notes
 
@@ -108,8 +108,8 @@ Each line should be evidence-based, concise (ideally 20–30 words), and must no
 
 ## Final score
 
-`technical_total` is out of 20.  
-`ai_total` is out of 15.  
-`total_score = technical_total + ai_total`, out of 35.
+`technical_total` is out of 25.  
+`ai_total` is out of 25.  
+`total_score = technical_total + ai_total`, out of 50.
 
 Do not round fractional scores. Use integer scores per dimension. Totals must reconcile exactly.

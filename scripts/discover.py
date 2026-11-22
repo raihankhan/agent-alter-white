@@ -83,8 +83,8 @@ def main():
         "manifest_version": "1.0.0",
         "organization": args.org,
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "rubric_version": "1.0.0",
-        "schema_version": "1.0.0",
+        "rubric_version": "1.1.0",
+        "schema_version": "1.1.0",
         "config": cfg,
         "summary": {
             "discovered": len(entries),

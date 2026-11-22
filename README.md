@@ -19,7 +19,7 @@
 
 ## The idea
 
-Alter White evaluates every eligible team repository in a GitHub organization against a consistent 35-point rubric. It reads each team's `project.pdf` or `project.docx`, inspects the implementation on `main`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
+Alter White evaluates every eligible team repository in a GitHub organization against a consistent 50-point rubric. It reads each team's `project.pdf` or `project.docx`, inspects the implementation on `main`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
 
 It is designed for a judging panel that needs **consistency, traceability, throughput, and an auditable record** rather than a pile of unstructured AI opinions.
 
@@ -43,21 +43,21 @@ It is designed for a judging panel that needs **consistency, traceability, throu
 ## Scoring at a glance
 
 <pre>
-                         ALTER WHITE · 35 POINTS
+                         ALTER WHITE · 50 POINTS
        ┌─────────────────────────────────────────────────────┐
-       │  Technical Implementation              20 points   │
-       │  ├─ Functional completeness              5         │
-       │  ├─ Architecture and design              4         │
-       │  ├─ Code quality                         4         │
-       │  ├─ Reliability and security              4         │
-       │  └─ Integration and execution evidence    3         │
+       │  Technical Implementation              25 points   │
+       │  ├─ Functional completeness              6         │
+       │  ├─ Architecture and design              5         │
+       │  ├─ Code quality                         5         │
+       │  ├─ Reliability and security              5         │
+       │  └─ Integration and execution evidence    4         │
        ├─────────────────────────────────────────────────────┤
-       │  AI Integration & Intelligence            15 points │
-       │  ├─ AI centrality and relevance            4        │
-       │  ├─ Intelligence and AI architecture       4        │
-       │  ├─ Context and data grounding              3        │
-       │  ├─ Evaluation and guardrails               2        │
-       │  └─ Resilience and adaptability             2        │
+       │  AI Integration & Intelligence            25 points │
+       │  ├─ AI centrality and relevance            5        │
+       │  ├─ Intelligence and AI architecture       6        │
+       │  ├─ Context and data grounding              5        │
+       │  ├─ Evaluation and guardrails               4        │
+       │  └─ Resilience and adaptability             5        │
        └─────────────────────────────────────────────────────┘
 </pre>
 

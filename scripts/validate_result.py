@@ -4,14 +4,14 @@ import argparse, json, sys
 from pathlib import Path
 
 TECH = {
- "functional_completeness": 5, "architecture_and_design": 4,
- "code_quality": 4, "reliability_and_security": 4,
- "integration_and_execution_evidence": 3
+ "functional_completeness": 6, "architecture_and_design": 5,
+ "code_quality": 5, "reliability_and_security": 5,
+ "integration_and_execution_evidence": 4
 }
 AI = {
- "ai_centrality_and_relevance": 4, "intelligence_and_ai_architecture": 4,
- "context_and_data_grounding": 3, "evaluation_and_guardrails": 2,
- "resilience_and_adaptability": 2
+ "ai_centrality_and_relevance": 5, "intelligence_and_ai_architecture": 6,
+ "context_and_data_grounding": 5, "evaluation_and_guardrails": 4,
+ "resilience_and_adaptability": 5
 }
 STATUSES = {"implemented", "partial", "mocked_or_hardcoded", "not_found", "unable_to_verify"}
 
@@ -41,8 +41,8 @@ def main():
     except ImportError:
         errors.append("jsonschema is not installed; run: python3 -m pip install -r requirements.txt")
 
-    if obj.get("schema_version") != "1.0.0": errors.append("schema_version must be 1.0.0")
-    if obj.get("rubric_version") != "1.0.0": errors.append("rubric_version must be 1.0.0")
+    if obj.get("schema_version") != "1.1.0": errors.append("schema_version must be 1.1.0")
+    if obj.get("rubric_version") != "1.1.0": errors.append("rubric_version must be 1.1.0")
     if obj.get("status") != "completed": errors.append("status must be completed")
     if obj.get("repository", {}).get("branch") != "main": errors.append("branch must be main")
     if obj.get("verification", {}).get("execution_status") != "not_run_static_review":
@@ -64,7 +64,7 @@ def main():
     if sc.get("technical_total") != st: errors.append("technical_total mismatch")
     if sc.get("ai_total") != ai: errors.append("ai_total mismatch")
     if sc.get("total_score") != st + ai: errors.append("total_score mismatch")
-    if sc.get("maximum_score") != 35: errors.append("maximum_score must be 35")
+    if sc.get("maximum_score") != 50: errors.append("maximum_score must be 50")
 
     summary = obj.get("review_summary", {})
     for k in ("technical_review", "ai_review", "final_verdict"):
@@ -94,7 +94,7 @@ def main():
     if errors:
         print("\n".join(f"- {e}" for e in errors), file=sys.stderr)
         sys.exit(1)
-    print(f"VALID: {obj['repository']['full_name']} {sc['total_score']}/35")
+    print(f"VALID: {obj['repository']['full_name']} {sc['total_score']}/50")
 if __name__ == "__main__":
     try: main()
     except Exception as e:

@@ -1,6 +1,6 @@
 ---
 name: alter-white
-description: Evaluate every eligible team_* repository in a GitHub organization against the Alter White 35-point hackathon rubric. Produces evidence-backed JSON and Markdown reports and a consolidated leaderboard.
+description: Evaluate every eligible team_* repository in a GitHub organization against the Alter White 50-point hackathon rubric. Produces evidence-backed JSON and Markdown reports and a consolidated leaderboard.
 argument-hint: <github-organization>
 disable-model-invocation: true
 ---
@@ -37,8 +37,8 @@ Project root is the current working directory. Use:
 - Scripts: `scripts/`
 - Results root: `results/`
 
-Rubric version: `1.0.0`.
-Schema version: `1.0.0`.
+Rubric version: `1.1.0`.
+Schema version: `1.1.0`.
 
 ## Phase 0 — preflight
 

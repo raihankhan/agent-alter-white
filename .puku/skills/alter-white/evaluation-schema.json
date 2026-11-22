@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://alter-white.local/schemas/evaluation-1.0.0.json",
+  "$id": "https://alter-white.local/schemas/evaluation-1.1.0.json",
   "title": "Alter White Team Evaluation",
   "type": "object",
   "additionalProperties": false,
@@ -19,10 +19,10 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "rubric_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "status": {
       "const": "completed"
@@ -109,20 +109,20 @@
         "technical_total": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 20
+          "maximum": 25
         },
         "ai_total": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 15
+          "maximum": 25
         },
         "total_score": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 35
+          "maximum": 50
         },
         "maximum_score": {
-          "const": 35
+          "const": 50
         }
       }
     },
@@ -336,10 +336,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 5
+                  "const": 6
                 },
                 "score": {
-                  "maximum": 5
+                  "maximum": 6
                 }
               }
             }
@@ -353,10 +353,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 4
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 4
+                  "maximum": 5
                 }
               }
             }
@@ -370,10 +370,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 4
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 4
+                  "maximum": 5
                 }
               }
             }
@@ -387,10 +387,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 4
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 4
+                  "maximum": 5
                 }
               }
             }
@@ -404,10 +404,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 3
+                  "const": 4
                 },
                 "score": {
-                  "maximum": 3
+                  "maximum": 4
                 }
               }
             }
@@ -434,10 +434,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 4
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 4
+                  "maximum": 5
                 }
               }
             }
@@ -451,10 +451,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 4
+                  "const": 6
                 },
                 "score": {
-                  "maximum": 4
+                  "maximum": 6
                 }
               }
             }
@@ -468,10 +468,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 3
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 3
+                  "maximum": 5
                 }
               }
             }
@@ -485,10 +485,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 2
+                  "const": 4
                 },
                 "score": {
-                  "maximum": 2
+                  "maximum": 4
                 }
               }
             }
@@ -502,10 +502,10 @@
             {
               "properties": {
                 "maximum": {
-                  "const": 2
+                  "const": 5
                 },
                 "score": {
-                  "maximum": 2
+                  "maximum": 5
                 }
               }
             }
