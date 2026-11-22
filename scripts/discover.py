@@ -7,7 +7,8 @@ from pathlib import Path
 DEFAULTS = {
     "repository_prefix": "team_", "branch": "master",
     "exclude_archived": True, "exclude_forks": True,
-    "max_repo_size_mb": 2048, "worker_count": 5
+    "max_repo_size_mb": 2048, "worker_count": 5,
+    "memory_worker": True, "memory_dir": "memory", "memory_poll_seconds": 60
 }
 
 def run(args, check=True):
@@ -24,9 +25,34 @@ def main():
     args = ap.parse_args()
 
     cfg = dict(DEFAULTS)
+    warnings = []
     cp = Path(args.config)
     if cp.exists():
-        cfg.update(json.loads(cp.read_text()))
+        try:
+            loaded = json.loads(cp.read_text())
+        except Exception as e:
+            loaded = {}
+            warnings.append(f"config {cp} is not readable JSON ({e}); using defaults")
+        for key, value in loaded.items():
+            if key not in DEFAULTS:
+                warnings.append(f"unknown config key ignored: {key}")
+                continue
+            if isinstance(DEFAULTS[key], bool) and not isinstance(value, bool):
+                warnings.append(f"config {key} must be a boolean; using default")
+                continue
+            if isinstance(DEFAULTS[key], int) and not isinstance(value, int):
+                warnings.append(f"config {key} must be an integer; using default")
+                continue
+            if isinstance(DEFAULTS[key], str) and not isinstance(value, str):
+                warnings.append(f"config {key} must be a string; using default")
+                continue
+            cfg[key] = value
+    if cfg["worker_count"] > 5:
+        warnings.append("worker_count above 5 exceeds the judging concurrency ceiling; clamped to 5")
+        cfg["worker_count"] = 5
+    if cfg["worker_count"] < 1:
+        warnings.append("worker_count below 1; clamped to 1")
+        cfg["worker_count"] = 1
 
     run(["gh", "auth", "status"])
     repos_raw = run([
@@ -93,7 +119,8 @@ def main():
         },
         "repositories": entries,
         "attempts": [],
-        "warnings": []
+        "warnings": warnings,
+        "reused": []
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

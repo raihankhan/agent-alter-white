@@ -10,6 +10,9 @@
   "evaluation_timeout_minutes": 20,
   "exclude_archived": true,
   "exclude_forks": true,
+  "memory_worker": true,
+  "memory_dir": "memory",
+  "memory_poll_seconds": 60,
   "skip_patterns": [
     ".git/**",
     "node_modules/**",

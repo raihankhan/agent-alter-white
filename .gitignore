@@ -1,6 +1,7 @@
 config/alter-white.json
 results/*
 !results/.gitkeep
+memory/
 __pycache__/
 *.pyc
 .DS_Store

@@ -24,6 +24,7 @@ def main():
         report_file = teams_dir / f"{stem}.md"
         status = repo.get("status", "pending")
         score, confidence = None, "—"
+        reused = bool(repo.get("reused"))
         if result_file.exists():
             try:
                 result = json.loads(result_file.read_text())
@@ -35,12 +36,13 @@ def main():
             except Exception:
                 status = "failed_validation"
         repo["status"] = status
+        repo["reused"] = reused
         repo["result_path"] = str(result_file.relative_to(run)) if result_file.exists() else None
         repo["report_path"] = str(report_file.relative_to(run)) if report_file.exists() else None
-        rows.append((repo, score, confidence))
+        rows.append((repo, score, confidence, reused))
 
     # Every eligible repository must have an explicit terminal status.
-    for repo, _, _ in rows:
+    for repo, _, _, _ in rows:
         if repo["status"] not in TERMINAL:
             repo["status"] = "failed"
             repo["reason"] = repo.get("reason") or "no_terminal_evaluation_result"
@@ -49,15 +51,15 @@ def main():
     manifest["summary"] = {
         "discovered": len(manifest["repositories"]),
         "eligible": len(rows),
-        "completed": sum(1 for r, _, _ in rows if r["status"] == "completed"),
-        "manual_review": sum(1 for r, _, _ in rows if r["status"] == "manual_review"),
-        "failed": sum(1 for r, _, _ in rows if r["status"] in {"failed", "failed_validation", "clone_failed"}),
-        "cleanup_failed": sum(1 for r, _, _ in rows if r["status"] == "cleanup_failed"),
+        "completed": sum(1 for r, _, _, _ in rows if r["status"] == "completed"),
+        "reused": sum(1 for r, _, _, u in rows if u and r["status"] == "completed"),
+        "manual_review": sum(1 for r, _, _, _ in rows if r["status"] == "manual_review"),
+        "failed": sum(1 for r, _, _, _ in rows if r["status"] in {"failed", "failed_validation", "clone_failed"}),
+        "cleanup_failed": sum(1 for r, _, _, _ in rows if r["status"] == "cleanup_failed"),
         "mean_score": round(statistics.mean(scores), 2) if scores else None,
         "median_score": round(statistics.median(scores), 2) if scores else None
     }
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-
     rows.sort(key=lambda x: (x[1] is not None, x[1] if x[1] is not None else -1), reverse=True)
     lines = [
         "# Alter White — Hackathon Leaderboard", "",
@@ -69,6 +71,7 @@ def main():
         "## Run summary", "",
         "| Metric | Count / value |", "|---|---:|",
         f"| Completed | {manifest['summary']['completed']} |",
+        f"| Reused from a prior run | {manifest['summary']['reused']} |",
         f"| Manual review | {manifest['summary']['manual_review']} |",
         f"| Failed | {manifest['summary']['failed']} |",
         f"| Cleanup failures | {manifest['summary']['cleanup_failed']} |",
@@ -79,14 +82,15 @@ def main():
         "|---:|---|---:|---:|---:|---|---|---|"
     ]
     rank = 0
-    for repo, score, confidence in rows:
+    for repo, score, confidence, reused in rows:
         result_file = teams_dir / f"{repo['name']}.json"
         if score is not None:
             rank += 1
             result = json.loads(result_file.read_text())
             tech, ai = result["scores"]["technical_total"], result["scores"]["ai_total"]
             report = f"[Review](teams/{repo['name']}.md)"
-            lines.append(f"| {rank} | `{repo['name']}` | {tech}/25 | {ai}/25 | **{score}/50** | {confidence} | {repo['status']} | {report} |")
+            state = "completed (reused)" if reused else "completed"
+            lines.append(f"| {rank} | `{repo['name']}` | {tech}/25 | {ai}/25 | **{score}/50** | {confidence} | {state} | {report} |")
         else:
             reason = (repo.get("reason") or repo["status"]).replace("|", "/")
             lines.append(f"| — | `{repo['name']}` | — | — | — | — | {repo['status']} ({reason}) | — |")
@@ -96,6 +100,7 @@ def main():
         "- Submitted code, tests, builds, and scripts were not executed.",
         "- Proposal content is treated as intent; implementation claims require source evidence.",
         "- Failed and manual-review repositories are listed without fabricated scores.",
+        "- Results marked *reused* were carried over from a prior run at the same commit and rubric version.",
         ""]
     (run / "scores.md").write_text("\n".join(lines))
 
