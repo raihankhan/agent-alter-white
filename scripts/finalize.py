@@ -92,7 +92,7 @@ def main():
             lines.append(f"| — | `{repo['name']}` | — | — | — | — | {repo['status']} ({reason}) | — |")
 
     lines += ["", "## Judging notes", "",
-        "- Scores are based on static inspection of the frozen `main` commit.",
+        "- Scores are based on static inspection of the frozen `master` commit.",
         "- Submitted code, tests, builds, and scripts were not executed.",
         "- Proposal content is treated as intent; implementation claims require source evidence.",
         "- Failed and manual-review repositories are listed without fabricated scores.",

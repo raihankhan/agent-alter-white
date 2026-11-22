@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Discover eligible team repositories and freeze the main commit SHA."""
+"""Discover eligible team repositories and freeze the target branch commit SHA."""
 import argparse, json, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULTS = {
-    "repository_prefix": "team_", "branch": "main",
+    "repository_prefix": "team_", "branch": "master",
     "exclude_archived": True, "exclude_forks": True,
     "max_repo_size_mb": 2048, "worker_count": 5
 }
@@ -66,7 +66,7 @@ def main():
             full = entry["full_name"]
             commit = run(["gh", "api", f"repos/{full}/commits/{cfg['branch']}", "--jq", ".sha"], check=False)
             if commit.returncode:
-                entry["reason"] = "main_branch_missing_or_inaccessible"
+                entry["reason"] = "target_branch_missing_or_inaccessible"
             else:
                 sha = commit.stdout.strip()
                 if not sha:

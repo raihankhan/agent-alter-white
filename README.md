@@ -19,7 +19,7 @@
 
 ## The idea
 
-Alter White evaluates every eligible team repository in a GitHub organization against a consistent 50-point rubric. It reads each team's `project.pdf` or `project.docx`, inspects the implementation on `main`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
+Alter White evaluates every eligible team repository in a GitHub organization against a consistent 50-point rubric. It reads each team's `project.pdf` or `project.docx`, inspects the implementation on `master`, scores technical execution and AI integration, and generates an individual review plus a consolidated leaderboard.
 
 It is designed for a judging panel that needs **consistency, traceability, throughput, and an auditable record** rather than a pile of unstructured AI opinions.
 
@@ -28,7 +28,7 @@ It is designed for a judging panel that needs **consistency, traceability, throu
 | Capability | Behaviour |
 |---|---|
 | Repository discovery | Finds repositories whose names start with `team_` |
-| Branch discipline | Evaluates only the `main` branch and records its commit SHA |
+| Branch discipline | Evaluates only the `master` branch and records its commit SHA |
 | Proposal-aware judging | Reads `project.pdf` or `project.docx` as the team's stated intent, not proof of implementation |
 | Evidence-first scoring | Requires code paths, symbols, and supporting evidence for findings |
 | Parallel execution | Uses five independent Claude Code subagents |
@@ -88,7 +88,7 @@ Every team report includes exactly three concise review lines:
 flowchart TD
     A["/alter-white ORG"] --> B["Coordinator skill"]
     B --> C["Discover eligible team_* repos"]
-    C --> D["Capture main SHA + metadata"]
+    C --> D["Capture master SHA + metadata"]
     D --> E["Resume check + size-balanced partition"]
     E --> F["Five parallel worker agents"]
     F --> G1["Worker 1 · sequential queue"]
@@ -217,7 +217,7 @@ The default settings are:
 |---|---:|---|
 | `worker_count` | `5` | Maximum concurrent worker agents |
 | `repository_prefix` | `team_` | Eligible repository prefix |
-| `branch` | `main` | Only branch evaluated |
+| `branch` | `master` | Only branch evaluated |
 | `shallow_clone_depth` | `1` | Clone depth |
 | `max_repo_size_mb` | `2048` | Skip oversized repositories for manual review |
 | `max_file_size_kb` | `512` | Exclude larger individual files from source review |
@@ -236,8 +236,8 @@ A repository is eligible when all of these are true:
 - Its name begins with `team_`.
 - It is not archived (unless configured otherwise).
 - It is not a fork (unless configured otherwise).
-- It has a `main` branch.
-- Its GitHub metadata and main commit can be retrieved.
+- It has a `master` branch.
+- Its GitHub metadata and master commit can be retrieved.
 
 Repositories that fail eligibility checks are listed in the discovery manifest with a reason; they are not silently lost.
 
@@ -289,9 +289,9 @@ A team report contains:
 
 Alter White should treat the manifest and per-team result JSON as the run ledger.
 
-- A result is reusable only when its repository URL, `main` commit SHA, rubric version, and schema version match the current run.
+- A result is reusable only when its repository URL, `master` commit SHA, rubric version, and schema version match the current run.
 - A completed result with matching metadata is skipped.
-- A repository whose `main` commit changed is evaluated again.
+- A repository whose `master` commit changed is evaluated again.
 - A failed or invalid result is retried at most the configured number of times.
 - A failed repository does not stop other workers.
 - The coordinator performs a final reconciliation so every eligible repository has a terminal state.
@@ -361,7 +361,7 @@ Do not silently edit the AI score in the JSON result.
 Before the event:
 
 - [ ] Confirm the GitHub organization and naming convention.
-- [ ] Confirm all teams have pushed final code to `main`.
+- [ ] Confirm all teams have pushed final code to `master`.
 - [ ] Confirm a `project.pdf` or `project.docx` exists in each repository.
 - [ ] Confirm GitHub CLI has read-only access to all team repositories.
 - [ ] Run the calibration batch.
@@ -390,7 +390,7 @@ After the event:
 
 **A repository is marked `manual_review`**
 
-- It may not have a `main` branch, may exceed configured limits, or may not have a readable `project.pdf` or `project.docx`.
+- It may not have a `master` branch, may exceed configured limits, or may not have a readable `project.pdf` or `project.docx`.
 - Inspect the reason in `manifest.json`.
 
 **A worker cannot find the custom agent**
@@ -418,7 +418,7 @@ After the event:
 | Decision | Why |
 |---|---|
 | Five workers maximum | Bounded concurrency and predictable model load |
-| `main` only | Avoid judging stale or experimental branches |
+| `master` only | Avoid judging stale or experimental branches |
 | Shallow clone | Reduces network transfer and disk use |
 | Static inspection | Avoids executing untrusted submissions |
 | Proposal + source review | Separates intent from implementation evidence |

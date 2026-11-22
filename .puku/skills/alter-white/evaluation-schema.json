@@ -46,7 +46,7 @@
           "format": "uri"
         },
         "branch": {
-          "const": "main"
+          "const": "master"
         },
         "commit_sha": {
           "type": "string",

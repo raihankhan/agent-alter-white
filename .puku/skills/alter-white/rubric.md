@@ -7,7 +7,7 @@
 ## Judging philosophy
 
 1. The proposal describes what the team intended to build; source code is evidence of what was implemented.
-2. Score the frozen `main` commit only.
+2. Score the frozen `master` commit only.
 3. Reward coherent implementation and demonstrated engineering, not ambition, complexity, or technology branding.
 4. A named AI framework, vector database, agent framework, or model provider earns no points by itself.
 5. Multi-agent orchestration is optional. A focused single-agent or model-assisted design can score highly.

@@ -1,7 +1,7 @@
 {
   "worker_count": 5,
   "repository_prefix": "team_",
-  "branch": "main",
+  "branch": "master",
   "shallow_clone_depth": 1,
   "max_repo_size_mb": 2048,
   "max_file_size_kb": 512,

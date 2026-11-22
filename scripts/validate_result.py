@@ -44,7 +44,7 @@ def main():
     if obj.get("schema_version") != "1.1.0": errors.append("schema_version must be 1.1.0")
     if obj.get("rubric_version") != "1.1.0": errors.append("rubric_version must be 1.1.0")
     if obj.get("status") != "completed": errors.append("status must be completed")
-    if obj.get("repository", {}).get("branch") != "main": errors.append("branch must be main")
+    if obj.get("repository", {}).get("branch") != "master": errors.append("branch must be master")
     if obj.get("verification", {}).get("execution_status") != "not_run_static_review":
         errors.append("execution_status must be not_run_static_review")
 

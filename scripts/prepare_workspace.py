@@ -30,8 +30,8 @@ def main():
         raise SystemExit(f"Destination already exists: {destination}")
 
     depth = int(manifest.get("config", {}).get("shallow_clone_depth", 1))
-    # Fetch the frozen SHA directly. A normal --branch main shallow clone can
-    # miss the discovery SHA if main advances between discovery and cloning.
+    # Fetch the frozen SHA directly. A normal --branch master shallow clone can
+    # miss the discovery SHA if the branch advances between discovery and cloning.
     destination.mkdir(parents=True)
     commands = [
         ["git", "-C", str(destination), "init", "--quiet"],

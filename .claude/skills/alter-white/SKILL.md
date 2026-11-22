@@ -14,7 +14,7 @@ The organization argument is: `$ARGUMENTS`.
 ## Non-negotiable constraints
 
 - Only repositories whose names start with `team_`.
-- Only the `main` branch.
+- Only the `master` branch.
 - Read the proposal from `project.pdf` or `project.docx` at the repository root, preferring `project.pdf`. It is intent, not implementation evidence.
 - Use the rubric in `rubric.md`; do not alter weights during a run.
 - Maximum concurrency is exactly five worker agents. Never start a sixth.
@@ -67,12 +67,12 @@ Discovery must:
 - List organization repositories through `gh`.
 - Keep only `team_*`.
 - Exclude archived repositories and forks by default.
-- Verify `main` exists and capture its commit SHA.
+- Verify `master` exists and capture its commit SHA.
 - Record repository URL, full name, disk usage, archived/fork flags, and eligibility reason.
 - Never clone a non-eligible repository.
 - Preserve all discovered entries, including exclusions, in the manifest.
 
-Do not change the captured commit SHA during the run. Clone the exact recorded `main` SHA, not a moving branch head. The clone must be shallow and single-branch. If the branch advances after discovery, the frozen SHA remains the evaluation target.
+Do not change the captured commit SHA during the run. Clone the exact recorded `master` SHA, not a moving branch head. The clone must be shallow and single-branch. If the branch advances after discovery, the frozen SHA remains the evaluation target.
 
 ## Phase 2 — resume and partition
 
